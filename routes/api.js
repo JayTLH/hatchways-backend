@@ -4,13 +4,13 @@ const axios = require('axios');
 const cache = require('memory-cache');
 
 // in memory cache middleware
-let apiCache = new cache.Cache();
-let cacheMiddleware = (duration) => {
+const apiCache = new cache.Cache();
+const cacheMiddleware = (duration) => {
   return (req, res, next) => {
-    let key = 'localhost' + req.url
-    let cacheContent = apiCache.get(key);
-    if (cacheContent) {
-      res.status(200).send(JSON.parse(cacheContent))
+    let key = req.url
+    let cacheData = apiCache.get(key);
+    if (cacheData) {
+      res.status(200).send(JSON.parse(cacheData))
       return
     } else {
       res.sendResponse = res.send
@@ -29,7 +29,7 @@ router.get('/ping', (req, res) => {
 });
 
 // route 2
-router.get('/post', cacheMiddleware(10), (req, res) => {
+router.get('/posts', cacheMiddleware(10), (req, res) => {
   let tag = req.query.tag
   let sortBy = req.query.sortBy
   let direction = req.query.direction
