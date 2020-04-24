@@ -22,10 +22,10 @@ describe('GET /api/ping', () => {
 });
 
 // testing route 2
-describe('GET /api/post', () => {
+describe('GET /api/posts', () => {
   it('should return an object with an array of posts', (done) => {
     chai.request(app)
-      .get('/api/post?tag=tech')
+      .get('/api/posts?tag=tech')
       .end((err, res) => {
         res.should.have.status(200)
         res.body.should.be.a('object')
